@@ -1,0 +1,93 @@
+\chapter{Source code Execution}
+
+
+ \section{A compiler is a translator}
+     The compiler takes a source program in a source langauge and transforms it into a target language. \\
+     e.g: C programs and Java documents and \LaTeX{} documents are source programs. \\
+     Target programs are machine code, Java byte code, PS documents, etc. \\
+     
+     \subsection{Why study compilers?}
+        \begin{itemize}
+            \item TO be more effective users of compilers ... instead of treating it as a black box. 
+            \item Apply compiler techniques to typical Software Engineering tasks that require reading input and taking action.
+            \\ ex: You have a system where you take reservations for train travel, where the user takes a reservation. You might want to apply some compiler techniques to extract some data and store them into data structures and perform some oeprations on them.
+            \item To see how core CS courses fit together, giving you the knowledge to construct a compiler. \\ You might want to see how something behaves in a data structure
+            \item To participate in R\&D projects to develop new high level PLs.
+        \end{itemize}
+    
+    \subsection{The phases of a compiler}
+    Source goes goes from a scanner, which is also called Lexer, and it stands for Lexical Analyzer. It scans words, reserved words, punctuations etc.. \\
+    It transforms your text file into a list of tokens, which carries information from the source code. \\
+    Some information from your file won't be needed.\\
+    Those tokens get put into a parser, which does synctactic analysis. \\
+    Synctactic Analysis is tasked with checking whether the tokens are in the expected sequence.
+    \\
+    And it uses for this purpose: Grammar. A formal description of what the syntax of the language is.
+    \\
+    We obtain a Concrete Syntax Tree, this however contains a lot of information that  you won't need later on.\\
+    It will allow you to check things about the grammar that the parser was not able to check. \\
+    This is called the Static Semantics Analyzer, but semantics is not used correctly used here, it has to do with types and "have we ever seen what this is before". instead of the meaning. \\
+    This leads to an abstract sytnax tree which is annotated or decorated. This is the front end of the compiler. \\
+    The back end of the compiler includes three parts:
+    \begin{itemize}
+        \item Source code optimizer: This tries to optimize the code by looking at the tree. Some optimizations are done by rearranging the tree, like some variables you computed in some weird places. You can move them to the top of the tree. \\
+        \item Code generator: We can generate what we call target code: this is either assembly language or machine language, but it could still be something higher level but not as high level as the source code. \\
+        \item Target code optimizer: This can be some local optimizations contrarily to the previous parts which take care of global optimizations.
+    \end{itemize}
+
+    \paragraph{Example of a Lexical Analysis}
+    for the code in slide 6:
+    The reserved words get turned into tokens that look like the original reserved words. There's a one to one mapping between the reserved indentifiers.\\
+    But the variables for example, they get turned into tokens that look like this: \texttt{ID} and then the name of the variable.\\
+    A floating point constant would be turned into something like this: \texttt{FCONST} and then the value of the constant.\\
+    
+    \paragraph{Type of errors in a compiler}
+    \begin{itemize}
+        \item \textbf{Compilation errors}: " yes you can do that/ no you can't do that".
+        \item \textbf{Runtime errors}: ex: you divide by zero.
+        \item \textbf{Logical errors}: ex: you have a loop that never terminates.
+    \end{itemize}
+
+    \paragraph{Example of Semantics}
+    \begin{table}[H]
+        \centering
+        \tcbox{
+            \texttt{ x = 0; f =1;}
+            \\
+            \texttt{ while (x != n)  \\ }
+            \\
+            x = x +1;\\
+            f  = f * x;\\
+        }
+    \end{table}
+
+    \section{Compilation}
+    \textbf{Object code }= Machine Language written in a format to be understood by the operating system.\\
+    The target program in object code has an input and an output, or at least one of them.\\
+    
+    \subsection{From Compilation to execution}
+    \begin{enumerate}
+        \item The code is in different files
+            \begin{itemize}
+                \item user-coded files are compiled separately, could be one after the other or in some other order.
+                \item Libraries are already compiled, these could be like stdio.h for c or PySINDy for python.
+            \end{itemize}
+        \item The \textbf{Linker} resolves external references and pulls everything together. This checks for things like the libraries that you are using, and it checks if they are available.\\
+            \begin{itemize}
+                \item Functions in PL libraries
+                \item functions in other user-coded files
+            \end{itemize}
+            An example for this is the \texttt{input } function in \LaTeX.\\
+            This can lead to some problematic errors such as runtime errors.\\
+            Hard-coded paths can cause problems when you move the code to another machine.\\
+        \item The linker creates an \textbf{Executable file} which is a file that can be executed.\\
+        \item The \textbf{Loader} loads the executable file into memory.\\
+        Most of the code that is stored in your .o files use what's called relative addresses, they're relative to the rest of the code.\\
+        We have an absolute address which is the address of the first byte of the executable file.\\
+        This address can be computed from the relative addresses.\\
+    \end{enumerate}
+     
+     
+    \section{What is an interpreter?}
+    The interpretation does the same process as compilation but only for one statement at a time.\\
+    If the statement requires some input, it will go fetch some input.\\

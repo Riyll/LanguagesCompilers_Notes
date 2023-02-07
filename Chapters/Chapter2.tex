@@ -1,0 +1,40 @@
+\chapter{Computational models and Paradigms}
+
+\section{Computational Models}
+     \subsection{Imperatives}
+     Focuses on decomposition into steps and the routines used to modularize. Examples include Pascal and C. \\
+     \begin{table}[H]
+        \begin{tabular}{cc}
+            \textbf{Control Structures} & \textbf{Implementation} \\
+            \midrule
+            Sequence & One statement after another \\
+            Selection & Various types of conditional statements \\
+            Repetition & Loops \\
+            \bottomrule        
+        \end{tabular}
+     \end{table}
+     \subsection{Functional}
+     Computation of values by use of expressions and functions. Works by passing values to functions and returning values from functions. Examples include Lisp and Haskell. \\
+    \begin{table}[H]
+        \begin{tabular}{cc}
+            \textbf{Control Structures} & \textbf{Implementation} \\
+            \midrule
+            Sequence & Function Application \\
+            Selection & Various types of conditional statements \\
+            Repetition & Recursion \\
+            \bottomrule        
+        \end{tabular}
+    \end{table}
+    Example: Computing the average of a list of numbers. \\
+    \subsection{Logic}
+    Computation of truth values by use of logical expressions and rules. Examples include Prolog and Datalog. \\
+    Example of prolog: \\
+    prologfact(1,1). \\
+    prologfact(N,F) :- \\ bla bla bla
+    \section{Machine architecture}
+    Basic model is von neumann architecture:
+    Works with a fetch, execture store cycle. \\
+    Instructions are low level and change state of machine.  \\
+    The von Neumann bottleneck: speed of machine limited by the speed of memory-CPU connection. \\
+    An example of a functional language is Lisp which was used by Lisp Machines, but they eventually, they did not succeed (see wikepedia for details). \\
+    Also, refer to wikepedia for "Timeline of Programming Languages" and "Programming Paradigms". \\

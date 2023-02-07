@@ -1,0 +1,153 @@
+\chapter{A very Simple Programming Language}
+
+\section{The first Programming Languages}
+     \subsection{Machine Languages}
+     These machine languages are based on simple instructions, they weren't necessarily specified in that way in the sense that you wouldn't see the words we would specify in a bit, but you would maybe see a sequence of 0s and 1s to specify one of these instructions:
+     \begin{itemize}
+        \item Load
+        \item Store
+        \item Add
+        \item Jump
+     \end{itemize}
+
+     Your instructions will depend on the architecture of processor:
+
+     \textbf{What is the word size of the machine?}\\
+     A word is a unit of information (code/data) that is exchanged between CPU \& Main memory.
+     The 64-bit and 32-bit words are indication of the word size of the machine.\\
+     \textbf{How much memory must be addressed?}
+
+     \textbf{Are there registers? How many?}
+     Registers are very fast memory locations that are directly accessible by the CPU.\\
+     RISC (Reduced Instruction Set Computer) processors have a small number of registers, while CISC (Complex Instruction Set Computer) processors have a large number of registers.\\
+
+     \subsection{Machine vs. Assembly Languages}
+     Machine languages are sequences of 0s and 1s, while assembly languages are sequences of mnemonics (words) that are mapped to machine instructions.\\
+
+     When programming languages weren't very developped yet, it was extremely difficult to write programs in machine languages, because you had to remember a lot of mnemonics, optimize CPU and memory usage and so on.\\
+
+     \subsection{Floating point operations}
+     This is one of the problems that led to the development of subroutines.\\
+
+     \subsection{Indexing}
+     We used array for scientific computations, but somtimes we needed to map multi dimensional arrays to memory locations, which were one dimensional.\\
+     This was first done through address modification, which was very dangerous.\\
+
+     \subsection{Pseudo-Code Interpreters}
+     Floating point and indexing subroutines allowed programming as if hardware provided operations for them.\\
+     This sparked a new idea, which led to creation of Pseudo-Code and an Interpreter.\\
+     When talking about Virtual machines we are talking about a machine that has its own data types and operators, it's guided by design principles, so that you can remember easier how to use it.\\
+     $\rightarrow$ This was part A of the Slides.
+
+
+     \section{Designing a Simple Language}
+     \subsection{The first Language}
+     This is not an existing language, it's just a language that we will use to illustrate the concepts of programming languages.\\
+     It is a very small machine compared to today's machines, which has 2000 words of 10-digit memory. These numbers are decimal.
+     These digits will have a sign, so they can be positive or negative.\\
+     This machine has some basic operations, such as arithmetic and comparison, it also knows how to index arrays, which is more sophisticated than machine languages.\\
+     It could also transfer control, which means jumping to a different line of the code.\\
+     You also have some simple Input/Output operations, such as reading and writing.\\
+     \subsection{What is a Programing}
+     A list of instructions stored in memory.\\
+     An instruction is an opcode + operands. With 1 instruction equal to 1 word.\\
+     There are two designs for instructions: both of them have 1 word (10 digits and a sign bit)\\
+     One has 2 digits opcode, 8 digits for 2 operands, the other has 1 digit for the opcode, with a three operands of 3 digits each. These operands symbolize memory locations.\\
+     \subsection{Things to think about}
+     \textbf{Do you mix instructions and data in memory?}\\
+     Sometimes, like we do in modern programming languages, you could format your code in a way that data and code are shuffled randomly in memory. A second option would be to have a separate block for Data and one for Code.\\
+     \textbf{How many operators (opcodes)}
+     \textbf{Operands?}
+     How many ? Do you need to represent them all ? What is the size of the operands ?\\
+     What do these operands represent? Addresses? Values?\\
+     \subsection{Main Memory Organization}
+     We will only have 2000 words of memory, which we will split into:
+     \begin{center}
+        \begin{tabular}{r|c|}
+            0 & \\
+            & DATA \\
+            999 & \\
+            \hline
+            1000 & \\
+            & CODE \\
+            1999 & \\
+        \end{tabular}
+     \end{center}
+     \subsection{Instrucion Design}
+     \begin{itemize}
+        \item \textbf{Operators} only need n, n between 10 and 20 operators, so we can use 1 sign and 1 digit. This combo is called an opcode.\\
+        \item \textbf{Operands} 3 operands of 3 digits each.\\
+        These will all be memory addresses.\\
+     \end{itemize}
+     \subsection{Design Principle}
+     Splitting memory into 2 parts and using the convention that certain operands will olny refer  to data memory and others only to program memory memory embodies an important principle.
+     \paragraph{Impossible Error Principle}
+     Making it impossible to make errors is better than making it easy to detect errors.\\
+     With this design, coding \texttt{c = a + b} required one instruction:
+     \begin{center}
+        \texttt{ADD $a_{mem}$ $b_{mem}$ $c_{mem}$}
+     \end{center}
+
+     \subsection{Summary: Introducition Syntax and Semantics}
+     \textbf{Syntax}\\
+     \begin{center}
+        \begin{tabular}{c|c|c|c|c|}
+            \hline
+            $+/-$ & OP & OPD1 & OPD2 & DEST\\
+            \hline
+        \end{tabular}
+     \end{center}
+     \textbf{Semantics:}\\
+     dest $\leftarrow$ opd1 op od2\\
+     $\rightarrow$ This was part B of the Slides.
+
+     \section{How to code operations?}
+     \subsection{Regularity Principle}
+     Regular rules, without exceptions, are easier to learn, use, design and debug.\\
+
+     \subsection{Orthogonality and Symmetry}
+     \begin{center}
+        \begin{tabular}{l|ccc}
+            Operation & op code & + & -\\
+            \midrule
+            add & 1 & + & -\\
+            multiply & 2 & \textbf{*} & \textbf{/}\\
+            quadratic & 3 & \textbf{$x^2$} & \textbf{$\sqrt{x}$}\\
+        \end{tabular}\\
+        There is some regularity in this, on one side, we have a clear relationship between the positive and negative signs, and the further we gown down the opcode lists, the further the complexity increases. \\
+     \end{center}
+     Therefore, we will map the direction to the sign, and the complexity to the \# code. This has to do with the word orthogonality.\\
+     
+     \subsection{Pushing Symmetry and Orthogonality too far}
+     We might run into exceptions, which come with the introduction fo irregular rules.\\
+     The orthogonality is advantageous if:
+     \begin{equation}
+        m + n + e < m*n + e
+     \end{equation}
+     with e being the number of exceptions.
+     \paragraph{Example from before}
+     $ m = 10$ and $n = 20$ and $e = 1$\\
+        $m + n + e = 31$ and $m*n + e = 201$\\
+    Thus we can see that the orthogonality is advantageous.\\
+
+    \subsection{Rrepresenting Control Flow}
+    We might introduce equality and inequality operators, for example:
+    \begin{center}
+        \begin{tabular}{l|ccc}
+            \midrule
+            Equality test + branch & 4 & if = goto & if $\neq$ goto\\
+            Inequality test + branch & 5 & if $\geq$ goto & if $<$ goto\\
+            \bottomrule            
+        \end{tabular}
+    \end{center}   
+    Just greater than or equal and less than are enough because you can obtain the other 2 by switching the two operands.\\
+    To compare to 0, we can store the value 0 in memory location 000.
+
+    \subsection{Simple Assignment/Moving Data}
+    Do we really need a special operator?\\
+    We can use the \texttt{ADD} operator to move data.\\
+    But this is expensive as it require a couple of instructions.\\
+    
+
+    
+

@@ -1,0 +1,135 @@
+\documentclass[12pt]{report}
+
+\usepackage[a4paper,margin=1.25in]{geometry}      % Set the page size to A4 and call the geometry package
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[labelfont=bf,figurewithin=section]{caption}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{pgfornament}
+
+\usepackage[most]{tcolorbox}              % Allows for the use of coloured boxes
+\tcbuselibrary{skins,most} 
+\tcbuselibrary{listings} 
+\tcbuselibrary{minted,breakable}
+\tcbuselibrary{theorems}          
+
+\usepackage[hidelinks]{hyperref}    % Allows for the use of hyperlinks and the highlighting of text
+
+\usepackage{subfig}                 % Allows for the use of subfigures
+\usepackage{wrapfig}                % Allows for the use of wrapped figures (figures that wrap around text)
+
+\usepackage{fancyhdr}               % Allows for the use of fancy headers and footers
+
+\usepackage{multicol}               % Allows for the use of multiple columns
+
+\usepackage[utf8]{inputenc}         % Required for inputting international characters
+\usepackage[T1]{fontenc}            % Output font encoding for international characters
+
+\usepackage{stix2}
+
+\usepackage{yfonts}                 % The yfonts package is used for the beautiful first Capital letter of a Paragraph
+\usepackage{circuitikz}
+
+%% Packages for Tables
+\usepackage{makecell}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{tabularx}
+
+
+\usepackage{fontawesome}
+\usepackage{minted}
+\usepackage{lipsum}                  % Allows for the use of dummy text
+
+
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+\numberwithin{equation}{section}
+
+\newtcbtheorem[number within=section]{mytheo}{Theorem}{colback=white,colframe=black,fonttitle=\bfseries}{th}
+
+
+\newtcolorbox{example}{colback=yellow!20, colframe=black, fonttitle=\bfseries, title=Example, enhanced, attach boxed title to top center={yshift=-2mm}}
+
+%----------------------------------------------------------------------------------------
+% CODE LISTING STYLES
+%----------------------------------------------------------------------------------------
+\newtcblisting{cppcode}{listing engine=minted,minted style=colorful,minted language=c++,minted options={fontsize=\small,breaklines,autogobble,linenos,numbersep=3mm},colback=blue!5!white,colframe=blue!75!black,listing only,left=5mm,enhanced,overlay={\begin{tcbclipinterior}\fill[red!20!blue!20!white] (frame.south west)rectangle ([xshift=5mm]frame.north west);\end{tcbclipinterior}},breakable}
+\newtcblisting{pythoncode}{listing engine=minted,minted style=colorful,minted language=python,minted options={fontsize=\small,breaklines,autogobble,linenos,numbersep=3mm},colback=green!5!white,colframe=green!75!black,listing only,left=5mm,enhanced,overlay={\begin{tcbclipinterior}\fill[red!20!blue!20!white] (frame.south west)rectangle ([xshift=5mm]frame.north west);\end{tcbclipinterior}},breakable}
+\newtcblisting{commandshell}{colback=black,colupper=white,colframe=yellow!75!black,listing only,listing options={style=tcblatex,language=sh},breakable}
+\newtcblisting{textcode}{listing engine=minted,minted style=colorful,minted language=text,minted options={fontsize=\small,breaklines,autogobble,linenos,numbersep=3mm},colback=white,colframe=black,listing only,left=5mm,enhanced,overlay={\begin{tcbclipinterior}\fill[red!20!blue!20!white] (frame.south west)rectangle ([xshift=5mm]frame.north west);\end{tcbclipinterior}},breakable}
+
+\newcommand{\figureornament}[2][1]{%
+  \raisebox{.5\fontcharht\font`0}{%
+    \pgfornament[scale=#1]{#2}%
+  }%
+}
+
+%----------------------------------------------------------------------------------------
+%    FANCY HEADER AND FOOTER
+%----------------------------------------------------------------------------------------
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[L]{\raisebox{1.5mm}{\pgfornament[width=2cm]{88}}}
+\fancyhead[R]{\leftmark}
+\fancyfoot[C]{\raisebox{1.5mm}{\pgfornament[width=1cm]{2}} \thepage\ \raisebox{1.5mm}{\reflectbox{\pgfornament[width=1cm]{2}}}}
+
+\setlength{\headheight}{14.5pt}
+\setlength{\topmargin}{-2.5pt}
+
+\fancypagestyle{plain}{
+    \fancyhead[]{}
+    \renewcommand{\headrule}{}}
+
+% The document Starts Here !********************************************************************************************************************!
+
+\begin{document}
+    %----------------------------------------------------------------------------------------
+    %	TITLE PAGE
+    %----------------------------------------------------------------------------------------
+
+    \begin{titlepage}                                                   % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
+        % Align the next ornament to the left of the page
+        
+    \centering
+
+    \begin{flushleft}
+        \pgfornament[color=red,width=3cm,ydelta=-20pt]{80}\\
+        \pgfornament[color=red,width=3cm,ydelta=-10pt]{61}\\
+    \end{flushleft}
+
+    \raggedleft
+    \vspace*{\baselineskip}
+    {\Large \textsc{Houssam Saber}} \\[0.167\textheight]                            % Name of the Author
+    {\Huge \textbf{Language \& Complete}} \\[\baselineskip]                         % Title of the document
+    {\textcolor{red}{\LARGE Notes \& Additional Materials}} \\ \vspace{4cm}
+    \Large{DATE OF SUBMISSION} \vfill
+    \pgfornament[color=red,width=4cm,ydelta=-10pt]{8}\\ \vfill
+    Lectures given by Dr. Violetta Cavalli-Sforza
+
+    \end{titlepage}
+
+    %----------------------------------------------------------------------------------------
+    %   TABLE OF CONTENTS SECTION (optional)
+    %----------------------------------------------------------------------------------------  
+
+    \tableofcontents                                 % Table of contents
+    %\newpage                                        % New page after the table of contents
+    \listoffigures                                   % List of figures, uncomment this line and the following line to include a list of figures
+    \newpage 
+
+
+    %----------------------------------------------------------------------------------------
+
+    \input{Chapters/Chapter1.tex}                    % Include the first chapter
+    \input{Chapters/Chapter2.tex}                    % Include the second chapter
+    \input{Chapters/Chapter3.tex}                    % Include the third chapter
+    \input{Chapters/Chapter4.tex}                    % Include the fourth chapter
+
+\end{document}

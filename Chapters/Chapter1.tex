@@ -1,0 +1,128 @@
+\chapter{Introduction to Programming Languages}
+
+    
+     \section{Intro to PLs: Outline \& Objectives}
+     \subsection{Why study PLs ?}
+        We can see CS issues as design issues with PL design issues, an example is an interactive application where the user has to input something, and you expect them t use certain symbols, and that's a problem of PL design itself.
+        Learning PLs would help in improving your ability to:
+        \begin{itemize}
+            \item develop effective algorithms.
+            \item Use an existing PL.
+            \item Understand useful programming constructs in PLs.
+            \item Learn new PLs.
+            \item Evaluate suitability of a PL for different tasks according to different criteria.
+        \end{itemize}
+
+     \subsection{Languages: Natural \& Formal}
+        Natural languages are like arabic and french and english and spanish, formal languages are like mathematics and logic.
+     \subsection{Synatax \& Semantics}
+        Syntax is the structure of a language, and semantics is the meaning of a language.
+        A sentence may be gramatically correct but semantically incorrect, example: "The house reads a book."
+        The meaning of the whole is the meaning of the parts. This is true in this example above and always in programming. This excludes figurative language.
+
+    \subsection{What is a PL?}
+    \begin{itemize}
+        \item A formal language whose purpose is special and language limited.
+        \item Set of rules and symbols used to construct a computer program.
+        \item A language used to interact with the computer
+        \item Capable of expressing any computer programming.
+        \item Equivalent to a universal turing machine. All PLs are equivalent in this sense.
+    \end{itemize}
+    \paragraph{A PL has:} 
+    \begin{itemize}
+        \item Like a natural language (NL) : \begin{itemize}
+            \item Words (lexemes) (Reserved, operators, +, -, *) and punctuation( () , ; ,\{ \} , []).
+            \item Synatax
+            \item Semantics
+        \end{itemize}
+        \item Unlike a NL, a PL has \underline{NO} ambiguity. (Everything means just one thing.)
+    \end{itemize}
+
+    \section{Factors affecting PL evolution}
+    \subsection{Applications}
+        \begin{itemize}
+            \item 1960s: \begin{itemize}
+                \item Business Processes
+                \item Scientific Computations: Scientific Computations ( Computing the Strain \& Stresses on certain bodies etc..)
+                \item System Programming: Operating systems etc.. a bit higher than the hardware level.
+                \item Artificial intelligence
+            \end{itemize}
+            \item 21st Century: Retains the above, but also includes: \begin{itemize}
+                \item Publishing
+                \item Process Description and Control
+                \item PC programming: GUIs and interactions between humans and machine
+                \item Web-programming (information processing of various types, vue.js and whatever)
+                \item Mobile Applications
+                \item Embedded System Programming (Such as aircraft systems or whatever) and are very low level with their interaction with hardware.
+            \end{itemize}
+        \end{itemize}
+    
+    \subsection{Hardware/Software trends}
+        \subsubsection{Hardware Trends}
+        Mainframes (Batch processing Environments), Minicomputers, Personal Computers ( which are getting faster ), supercomputers ( massively parallel processing ), and Embedded Systems ( Which require high reliability ).\\
+        in the late 1970s, Networking started becoming popular: from 1970s, PCs started supporting LANs, in the 80s appeared ARPANET, and in the late 80s, internet and WWWW appeared with the first browser, netscape.\\
+        Moore's Law states that the number of transistors in a dense integrated circuit doubles about every two years, this affects Memory size (RAM), Secondary storage (permanent storage), and processor speeds.\\ This eventually enabled us to have portable devices with high processing power and high memory in the form of laptops and smartphones.\\ \par\noindent\rule{\textwidth}{0.4pt} \\ 
+
+        These software trends led to the development of softwar eengineering methodologies, software designing tools, and eventually new PLs (programming languages).\\
+        \subsection{Other factors}
+        Programming environments, Language Standardization (before, a lot of companies had different standards, which made it so that you might not be able to port your program from one compiler to another, as they differed), internationalization,Theoretical studies, Economics.
+
+    \section{PL generations}
+    \begin{itemize}
+        \item 1st generation: machine language
+        \item 2nd generation: assembly language
+        \item 3rd generation: Original "high-level" PLs \\ Examples: C, Pascal, Algol, FORTRAN, Java, C++, Lisp, Python?
+        \item 4th generation: "Special purpose" \\ provide a higher level of abstraction of the internal computer hardware details \\ E.g database management, web-development, mathematical computation, GUI, shell programming
+        \item 5th generation: constraint-based and logic programming languages and some declarative Ls \\ E.g Prolog, Lisp, Haskell.
+    \end{itemize}
+
+    \subsection{Machine Language (Example)}
+    Simple machine language for a controller that operates a bulb might include shifting between 1s and 0s to shift between the operational states of the machine.\\
+    \subsection{Assembly Language (Example)}
+    Instructions start in a specific column, end in a specfic column, and are generally more structured than machine language.\\ This is where hexadecimal numbers start to appear, because you can include 4 bits in a single hex digit.\\
+    \subsection{Evolution of imperative \& OOP PLs}
+    FORTRAN IV (1957) was the first PL to have a structured programming paradigm, and it was the first PL to have a compiler.\\
+    Ada 83 and 95 were extremely complex and were some of the first languages to be fully operatable.\\
+    \subsection{Fortran IV}
+    GOTO is a reserved keyword in FORTRAN IV, and it is used to jump to a specific line in the program.\\
+    the DO-loop was the only high-level instruction in FORTRAN IV.\\
+    \subsection{COBOL (1959-61)}
+    COBOL was introduced by committee, and it was the first PL to be used in business applications.\\
+    Its features included separate data description, record data structures, file description/manipulation, and early Standardization.\\
+    Supera Al Akhawayn has an ex-COBOL programmer.\\
+    A sample COBOL program is shown in the course slides.\\
+    \textbf{BLOCK Structured language}\\
+    Compound statements let us treat a series of statements like a single statement.\\
+    Blocks are compound statements + Local DATA.\\
+    \subsection{ALGOL 60 (1957-60)}
+    Thsi was the first language carefully defined by "report".\\
+    It was block structured, and could handle recursion.\\
+    It had explicit data type declarations, scope rules and dynamic lifetimees, relational \& boolean expressions, and more.\\
+    It is now not used much, but was used back then.\\
+    \textbf{ABSTRACT DATA TYPES}\\
+    a data structure = ADT + implementation.\\
+    LIST ADT: 
+    \begin{itemize}
+        \item Sequences of elements
+        \item Ordering
+        \item Successor (next)
+        \item Predecessor (Previous)
+    \end{itemize}
+    A string and a list are both sequences, and both are considered subtypes of the type SEQUENCE.\\
+    \subsection{Modular Languages}
+    They started distinguishing between the \textbf{interface} and the \textbf{implementation}.\\
+    \textbf{Interface}: the set of operations that can be performed on the data structure.\\
+    \textbf{Implementation}: the way the data structure is implemented.\\
+    \subsection{Smalltalk (1976,1980)}
+    This was the first fully object oriented PL.\\
+    It was developed by Alan Kay, and it was the first PL to have a graphical user interface.\\
+    It had objects and object abstractions (classes)
+    \subsection{C++}
+    C++ was built on top of C, and is still widely used, and comparable to Java.\\
+    The main advantage of C++ is that it is compatible with C, and you could opt to not make everything be an object.\\
+    \section{Summary}
+    Architecture has affected which language are used and which are not.\\
+    You can think of these languages as belonging to different paradigms based on two different criteria: \begin{itemize}
+        \item The way the program is structured
+        \item The way the data is structured
+    \end{itemize}
