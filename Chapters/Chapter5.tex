@@ -1,0 +1,163 @@
+\chapter{Lexical Analysis}
+
+\section{Reminder about compilation steps}
+\begin{enumerate}
+    \item \textbf{Scanner/Lexer}: This takes a Source program and breaks it into tokens.
+    \item \textbf{Parser}: This takes a stream of tokens and builds a parse tree.
+    \item \textbf{Semantic Analyzer}: Takes cares of the annotations and type checking. This generated an annotated tree.\\
+    \hline
+    From here on this low level optimization
+    \hline
+\item \textbf{Source code optimizer}: Converts the Annotated tree into intermediate code.
+\item \textbf{Code Generator}: Generates the target code.
+\item \textbf{Target Code Optimizer}: Optimizes the target code.
+\end{enumerate}
+
+It is important to note that a Lexical Analyzer is a synonym of a Lexer and a Scanner. The terms are used interchangeably.
+
+\section{Lexical Analysis}
+Lexical analysis is the process of converting a sequence of characters into a sequence of tokens. The tokens are the smallest meaningful units of a programming language. For example, in C, the tokens are identifiers, keywords, operators, and so on. The lexical analyzer is also known as a scanner or a lexer.\\
+This removes the content-free characters such as spaces, tabs, and newlines. It also removes comments. 
+\\ It detects lexical errors, such as badly-formed literals, and illegal characters.\\
+This is a pattern matching process: It acts as front-eend for the parser, and is an implementation of a finite state automaton.\\
+A substring of the source program that belongs together is called a lexeme, and a lexeme is matched against a pattern, which is associated with a lexical category called a \textbf{token}.\\
+
+You can define a lexical analyzer via a list of pairs:
+\begin{itemize}
+    \item A regular Expression: describes a token pattern that is matched against the input to extract lexemes.
+    \item An action: a piece of code, parameterized by the matching lexeme, that returns a (token, attribute) pair.
+\end{itemize}   
+
+\section{Regular Expressions}
+These are a language with its own syntax and semantics. They are used to describe patterns in strings.\\
+Certain characters and character combinations denote specific operations, impose certain constraints, or modify default operator precedence.
+\textbf{Meta languages}: They describe a particular family of languages called the \textbf{regular languages}.\\
+
+\subsection{Important Symbols}
+The empty set: $\emptyset$\\
+The empty string: $\epsilon$\\
+Alternation: $|$\\
+Repetition: $*$: 0 or more times, $+$: 1 or more times, $?$: 0 or 1 times\\
+Optionality: $?$: a$?$ describes the set of strings that are either a or $\epsilon$\\
+A kleene cross: $+$: a$+$ describes the set of strings that are either a or aa or aaa or ...\\
+Wildcard: $.$: matches any single character\\
+Classes: $[a-z]$\\
+Escape: $\backslash$\\
+
+\subsection{Precedence}
+The precedence of the operators is as follows:
+\begin{enumerate}
+    \item $*$, $+$, $?$, $^*$, $^+$, $^?$, $^-$
+    \item Concatenation
+    \item Alternation
+\end{enumerate} 
+\newpage
+
+\section{Finite State Automata}
+A finite state automaton (FSA) is a machine that has a finite number of states and a finite number of inputs.\\
+It is a model of computation that can be used to recognize languages.\\
+It is a 5-tuple: $M = (Q, \Sigma, \delta, q_0, F)$\\
+Where:
+\begin{itemize}
+    \item $Q$ is a finite set of states.
+    \item $\Sigma$ is a finite set of input symbols.
+    \item $\delta: Q \times \Sigma \rightarrow Q$ is the transition function.
+    \item $q_0 \in Q$ is the initial state.
+    \item $F \subseteq Q$ is the set of final states. (accepting states)
+\end{itemize}
+
+\subsection{Deterministic Finite State Automata}
+A deterministic finite state automaton (DFA) is a finite state automaton that has the following properties:
+\begin{enumerate}
+    \item For each state $q \in Q$ and each input symbol $a \in \Sigma$, there is at most one transition from $q$ on $a$.
+    \item The transition function $\delta$ is total: for each state $q \in Q$ and each input symbol $a \in \Sigma$, there is a transition from $q$ on $a$.
+\end{enumerate}
+
+\subsection{Non-Deterministic Finite State Automata}
+A non-deterministic finite state automaton (NFA) is a finite state automaton that is not necessarily deterministic.\\
+an NFA accepts a string when there is a computation of the NFA that accepts the string. \\
+There is a \textbf{Computation} when all the input is consumed and the automaton is in an accepting state.\\
+An NFA rejects a string when there is no computation of the NFA that accepts the string.\\
+
+Empty transitions are allowed in an NFA, but not in DFAs.
+
+
+\subsection{DFA vs NFA}
+
+\begin{itemize}
+    \item NFAs are usually smaller but take more time to process, since they have to backtrack if they tak the wrong path, or even hang.
+    \item Every NFA can be transformed into a DFA, but the resulting DFA may be much larger.
+    \item Every NFA with lambda transitions can be transformed into an equivalent NFA without lambda transitions.
+\end{itemize}
+
+\section{Lexical Analyzer Implementation}
+You might design a finiet state automaton that d escribes the expected input patterns and writes a program that implements the automaton.\\
+This is a tedious process, and it is error-prone.\\
+\noindent\hfil\rule{0.5\textwidth}{.4pt}\hfil
+\\
+You might design a FSA that describes the expected input patterns and hand-construct a table-driven implementation of the FSA.
+\\
+\noindent\hfil\rule{0.5\textwidth}{.4pt}\hfil
+\\
+You might write a formal description of he expected input patterns using REs and use a software tool that constructs table-driven lexical analyzers from such a description.
+
+\section{State Diagram Design}
+This is one way of representing an FSA.\\
+A naïve state diagram would have a transition from every state on every character in the source language. But it would be very large!\\ 
+In many cases, transitions can be combined to simplify the state diagram:
+\begin{itemize}
+     \item When recognizing an identifier, all uppercase and lowercase letters are equivalent. So, you can combine all the transitions on the letters into a single transition on a class of letters.
+    \item When recognizing a number, all digits are equivalent. So, you can combine all the transitions on the digits into a single transition on a class of digits.
+\end{itemize}
+
+an example of this code in C would look like:
+
+\begin{cppcode}
+    int LexAnalyzer() {
+        getChar();
+        if (isLetter(nextChar)) {
+            addChar();
+            getChar();
+            while (isLetter(nextChar) || isDigit(nextChar)) {
+                addChar();
+                getChar();
+            }
+            return lookup(lexeme);
+        }
+        else if (isDigit(nextChar)) {
+            addChar();
+            getChar();
+            while (isDigit(nextChar)) {
+                addChar();
+                getChar();
+            }
+            return INT_LIT;
+        }
+    }
+\end{cppcode}
+
+You could try to match all reserved words explicitly in the FSA, but this would be tedious and error-prone.\\
+It is better to treat all IDs the same but look them up in the \textbf{Symbol Table} after the token is created to identify which are reserved words.\\ 
+
+A lexical analyzer using token parsing with FSA logic implementation algorithm would look like:
+
+\begin{commandshell}
+    state =S // S is the start state
+    repeat {
+        k = next character from the input
+        if k == EOF                     // the end of input
+            if state is a final state
+                then accept
+                else reject
+        state = transition(state, k)    // transition to a new state
+        if state == empty
+            then reject                 // got stuck
+        }
+\end{commandshell}
+
+\section{On Lexical Errors}
+Lexical errors are not syntax errors,  they occur only if a character not recognized by a programming language.\\
+This usually means that you have a malformed lexeme \textbf{According to the rules of the language}.\\
+
+\section{Practice Problems}
+This section will be added later on.

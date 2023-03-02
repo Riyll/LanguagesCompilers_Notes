@@ -1,0 +1,52 @@
+\chapter{Language Description \& Analysis at the Syntactic Level:}
+
+\section{Regular and Context-Free Languages} 
+
+\subsection{Regular Languages}
+A language $L$ is regular if there is an automaton $M$ such that $L(M) = L$. All languages accepted by FAs form the family of regular languages.\\ 
+There exist automata that accept these simple languages:
+\begin{itemize}  \item \{ $abbab$ \}  \item \{ $\lambda$, $ab$, $abba$ \} \end{itemize}
+and even these languages:
+\begin{itemize}
+ \item    All strings with prefix ab
+\item    All strings without the substring 001
+\end{itemize}
+
+We use Regular expressions for description, Finite Automata for Implementation and Regular Languages for Analysis.\\
+
+\subsection{Analysis vs. Generation}
+Analysis is a stronger form of acceptance. It is the ability to determine whether a string belongs to a language or not.\\
+Analysis extracts some information from its input and provides it in the ouput in a transformed form, e.g: \underline{Lexical analysis transforms source text into a token stream.} 
+
+A description of $L(M)$ should describe exactly all the strings in $L(M)$ and no other strings.\\
+Generation uses the formal description (grammar) to output examples of strings belonging to language $L$.\\
+A description can both \textbf{Overgenerate} and \textbf{Undergenerate}.\\
+
+Overgeneration is a description that generates strings that are not in the language.\\
+Undergeneration is a description that does not generate all the strings in the language.\\
+
+\subsection{Non-Regular Languages}
+A language $L$ is non-regular if there is no automaton $M$ such that $L(M) = L$.\\
+An example is the following language: \{ $a^n b^n$ | $n \geq 0$ \} \\
+This language is not regular because it is not accepted by any FA. \\
+This is because there is no way to remember the number of number of $a$s that have been generated, and then generate the same number of $b$s.\\
+you would need a stack to remember the number of $a$s generated, and then generate the same number of $b$s. This woudl be done through a \textbf{Pushdown Automaton}.\\
+We can classify languages into 4 sections:
+\begin{itemize}
+ \item Regular
+ \item Context-Free
+ \item Context-Sensitive
+ \item Recursively Enumerable
+\end{itemize}
+The generative capacity of languages increases as we move from top to bottom.\\
+context-free grammar is used to describe context-free languages, and a parser is used to implement it.\\
+
+\paragraph{Grammar} is a formal system that provides a generate finite description of L using a set of rules.\\
+A grammar is a 4-tuple $G = (V, T, P, S)$ where:
+\begin{itemize}
+ \item $V$ is a finite set of \textbf{non-terminal symbols}
+ \item $T$ is a finite set of \textbf{terminal symbols}
+ \item $P$ is a finite set of \textbf{production rules}
+ \item $S$ is the \textbf{start symbol}
+\end{itemize}
+

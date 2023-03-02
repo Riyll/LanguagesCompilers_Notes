@@ -1,0 +1,11 @@
+    state =S // S is the start state
+    repeat {
+        k = next character from the input
+        if k == EOF                     // the end of input
+            if state is a final state
+                then accept
+                else reject
+        state = transition(state, k)    // transition to a new state
+        if state == empty
+            then reject                 // got stuck
+        }
